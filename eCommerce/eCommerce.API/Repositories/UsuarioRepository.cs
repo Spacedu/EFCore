@@ -2,6 +2,12 @@
 
 namespace eCommerce.API.Repositories
 {
+    /*
+     * Controller > UsuarioRepository
+     * Controller > IUsuarioRepository(abstrai) > UsuarioMemoryRepository (Implement IUsuarioRepository)
+     * Controller > IUsuarioRepository > UsuarioEFRepository (EF Core)
+     * Controller > IUsuarioRepository > UsuarioMockRepository (Testes)
+     */
     public class UsuarioRepository : IUsuarioRepository
     {
         public static List<Usuario> _db = new List<Usuario>();

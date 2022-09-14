@@ -1,3 +1,4 @@
+using eCommerce.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.API.Controllers
@@ -6,20 +7,23 @@ namespace eCommerce.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        public UsuarioRepository _repository { get; set; }
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, UsuarioRepository repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> Get([FromServices]UsuarioRepository repository)
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
