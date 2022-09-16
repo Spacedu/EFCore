@@ -9,6 +9,15 @@ using System.Threading.Tasks;
 namespace eCommerce.Models
 {
     /*
+     * Usuario -> Pedido
+     * Usuario (Clientes e Colaborador)
+     * Pedido:
+     * - Fazer Pedido (Usuario-Cliente)
+     * - Atualizar o Pedido (Usuario-Colaborador)
+     * - Supervisionar o pedido (Usuario-Colaborador-Supervisor)
+     */
+
+    /*
      * Schema:
      * *[Table] = Definir o nome da tabela
      * *[Column] = Definir o nome da coluna
@@ -67,5 +76,31 @@ namespace eCommerce.Models
         public Contato? Contato { get; set; }
         public ICollection<EnderecoEntrega>? EnderecosEntrega { get; set; }
         public ICollection<Departamento>? Departamentos { get; set; }
+
+        /*
+         * PedidosCompradosPeloCliente 
+         * - ClienteId*
+         * - ColaboradorId
+         * - SupervisorId
+         * 
+         * PedidosGerenciadoPeloColaborador
+         * - ClienteId
+         * - ColaboradorId*
+         * - SupervisorId
+         * 
+         * PedidosSupervisionadosPeloColaboradorSupervisor
+         * - ClienteId
+         * - ColaboradorId
+         * - SupervisorId*
+         */
+
+        [InverseProperty("Cliente")]
+        public ICollection<Pedido>? PedidosCompradosPeloCliente { get; set; }
+
+        [InverseProperty("Colaborador")]
+        public ICollection<Pedido>? PedidosGerenciadoPeloColaborador { get; set; }
+
+        [InverseProperty("Supervisor")]
+        public ICollection<Pedido>? PedidosSupervisionadosPeloColaboradorSupervisor { get; set; }
     }
 }
