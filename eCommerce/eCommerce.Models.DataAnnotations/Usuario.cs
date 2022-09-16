@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,14 +24,14 @@ namespace eCommerce.Models
      * *[Column] = Definir o nome da coluna
      * *[NotMapped] = Não mapear uma propriedade
      * *[ForeignKey] = Definir que a propriedade é o vinculo da chave estrangeira
-     * [InverseProperty] = Defini a referência para cada FK vinda da mesma tabela.
+     * *[InverseProperty] = Defini a referência para cada FK vinda da mesma tabela.
      * *[DatabaseGenerated] = Definir se uma propriedade vai ou não ser gerenciada pelo banco.
      * 
      * DataAnnotations:
      * *[Key] = Definir que a propriedade é uma PK.
      * 
      * EF Core
-     * [Index] = Definir/Criar Indice no banco (Unique).
+     * *[Index] = Definir/Criar Indice no banco (Unique).
      */
 
     /*
@@ -39,6 +40,9 @@ namespace eCommerce.Models
      * Database-First = Database -> Code
      */
 
+    //nameof(Email) = "Email"
+    [Index(nameof(Email), IsUnique = true, Name = "IX_EMAIL_UNICO")]
+    [Index(nameof(Nome), nameof(CPF))]
     [Table("TB_USUARIOS")]
     public class Usuario
     {
