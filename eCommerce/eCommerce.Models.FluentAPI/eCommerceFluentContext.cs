@@ -26,6 +26,9 @@ namespace eCommerce.Models.FluentAPI
              * NotMapped*, 
              * DatabaseGenerated(ValueGeneratedNever=None, ValueGeneratedOnAdd=Identity, ValueGeneratedOnAddOrUpdate=Computed) 
              * Index*
+             *
+             * Key*
+             * ForeignKey
              */
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
             modelBuilder.Entity<Usuario>().Property(a => a.RG).HasColumnName("REGISTRO_GERAL").HasMaxLength(10).HasDefaultValue("RG-AUSENTE").IsRequired();
@@ -37,6 +40,16 @@ namespace eCommerce.Models.FluentAPI
 
             modelBuilder.Entity<Usuario>().HasIndex("CPF", "Email");
             modelBuilder.Entity<Usuario>().HasIndex(a=>new {a.CPF, a.Email});
+
+            modelBuilder.Entity<Usuario>().HasKey("Id");
+            modelBuilder.Entity<Usuario>().HasKey(a => a.Id);
+
+            modelBuilder.Entity<Usuario>().HasKey("Id", "CPF");
+            modelBuilder.Entity<Usuario>().HasKey(a => new { a.Id, a.CPF });
+
+            modelBuilder.Entity<Usuario>().HasAlternateKey("CPF", "Email");
+
+            modelBuilder.Entity<Usuario>().HasNoKey();
         }
     }
 }
