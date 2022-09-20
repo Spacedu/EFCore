@@ -27,7 +27,7 @@ namespace eCommerce.Office
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region ColaboradorSetor
+            #region Mapping: ColaboradorSetor
             /*
              * Muitos para Muitos usando 2 relacionamentos de Um para Muitos
              * Many-To-Many: 2x One-To-Many
@@ -47,6 +47,9 @@ namespace eCommerce.Office
             */
             #endregion
 
+            #region Mapping: Colaborador <=> Turma (EF Core 5+)
+            modelBuilder.Entity<Colaborador>().HasMany(a => a.Turmas).WithMany(a => a.Colaboradores);
+            #endregion
             #region Seeds
             modelBuilder.Entity<Colaborador>().HasData(
                 new Colaborador() { Id = 1, Nome = "José" },
@@ -72,6 +75,14 @@ namespace eCommerce.Office
                 new ColaboradorSetor() { SetorId = 3, ColaboradorId = 7, Criado = DateTimeOffset.Now },
                 new ColaboradorSetor() { SetorId = 4, ColaboradorId = 2, Criado = DateTimeOffset.Now },
                 new ColaboradorSetor() { SetorId = 4, ColaboradorId = 3, Criado = DateTimeOffset.Now }
+            );
+
+            modelBuilder.Entity<Turma>().HasData(
+                new Turma() { Id = 1, Nome = "Turma A1" },
+                new Turma() { Id = 2, Nome = "Turma A2" },
+                new Turma() { Id = 3, Nome = "Turma A3" },
+                new Turma() { Id = 4, Nome = "Turma A4" },
+                new Turma() { Id = 5, Nome = "Turma A5" }
             );
             #endregion
         }
