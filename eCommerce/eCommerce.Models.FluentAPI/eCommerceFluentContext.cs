@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eCommerce.Models.FluentAPI.Configurations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace eCommerce.Models.FluentAPI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Explicações do CAP 07
             /* Table*, 
              * Column*, 
              * NotMapped*, 
@@ -68,7 +70,31 @@ namespace eCommerce.Models.FluentAPI
             modelBuilder.Entity<Usuario>().HasMany(usu=>usu.Departamentos).WithMany(dep=>dep.Usuarios);
 
             modelBuilder.Entity<Usuario>().Property(a => a.Preco).HasPrecision(2);
+            #endregion
 
+            /*
+             * Pequenos/Médio > Cerca 0 - 10
+             */
+            #region Usuario
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Usuario>();
+            #endregion
+
+            #region Contato
+            modelBuilder.Entity<Contato>();
+            modelBuilder.Entity<Contato>();
+            modelBuilder.Entity<Contato>();
+            modelBuilder.Entity<Contato>();
+            #endregion
+
+            /*
+             * Médio/Grande > +10 Tabelas
+             */
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
         }
     }
 }
