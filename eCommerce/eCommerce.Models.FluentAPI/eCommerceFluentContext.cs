@@ -32,6 +32,8 @@ namespace eCommerce.Models.FluentAPI
              * 
              * Relacionamentos entre Tabelas/Entidades:
              * Has/With + One/Many = HasOne, HasMany, WithOne, WithMany
+             * 
+             * OnDelete*
              */
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
             modelBuilder.Entity<Usuario>().Property(a => a.RG).HasColumnName("REGISTRO_GERAL").HasMaxLength(10).HasDefaultValue("RG-AUSENTE").IsRequired();
@@ -57,12 +59,9 @@ namespace eCommerce.Models.FluentAPI
 
             //One > 1 Propriedade de Navegação do Objeto único.
             //Many > 1 Propriedade de Navegação do tipo Lista/Colleção.
-            modelBuilder.Entity<Usuario>().HasOne(usu=>usu.Contato).WithOne(cont=>cont.Usuario).HasForeignKey<Contato>(a=>a.UsuarioId);
+            modelBuilder.Entity<Usuario>().HasOne(usu=>usu.Contato).WithOne(cont=>cont.Usuario).HasForeignKey<Contato>(a=>a.UsuarioId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Usuario>().HasMany(usu=>usu.EnderecosEntrega).WithOne(end=>end.Usuario).HasForeignKey(end=>end.UsuarioId);
             modelBuilder.Entity<Usuario>().HasMany(usu=>usu.Departamentos).WithMany(dep=>dep.Usuarios);
-
-
-
 
         }
     }
