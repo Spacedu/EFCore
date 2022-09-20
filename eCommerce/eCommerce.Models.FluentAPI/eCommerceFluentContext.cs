@@ -34,6 +34,10 @@ namespace eCommerce.Models.FluentAPI
              * Has/With + One/Many = HasOne, HasMany, WithOne, WithMany
              * 
              * OnDelete*
+             * 
+             * IsRequired*
+             * HasMaxLength*
+             * HasPrecision*
              */
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
             modelBuilder.Entity<Usuario>().Property(a => a.RG).HasColumnName("REGISTRO_GERAL").HasMaxLength(10).HasDefaultValue("RG-AUSENTE").IsRequired();
@@ -62,6 +66,8 @@ namespace eCommerce.Models.FluentAPI
             modelBuilder.Entity<Usuario>().HasOne(usu=>usu.Contato).WithOne(cont=>cont.Usuario).HasForeignKey<Contato>(a=>a.UsuarioId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Usuario>().HasMany(usu=>usu.EnderecosEntrega).WithOne(end=>end.Usuario).HasForeignKey(end=>end.UsuarioId);
             modelBuilder.Entity<Usuario>().HasMany(usu=>usu.Departamentos).WithMany(dep=>dep.Usuarios);
+
+            modelBuilder.Entity<Usuario>().Property(a => a.Preco).HasPrecision(2);
 
         }
     }
