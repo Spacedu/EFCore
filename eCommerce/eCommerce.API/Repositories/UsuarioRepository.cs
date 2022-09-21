@@ -1,5 +1,6 @@
 ﻿using eCommerce.API.Database;
 using eCommerce.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.API.Repositories
 {
@@ -19,11 +20,11 @@ namespace eCommerce.API.Repositories
 
         public List<Usuario> Get()
         {
-            return _db.Usuarios.OrderBy(a => a.Id).ToList();
+            return _db.Usuarios.Include(a=>a.Contato).OrderBy(a => a.Id).ToList();
         }
         public Usuario Get(int id)
         {
-            return _db.Usuarios.Find(id)!;
+            return _db.Usuarios.Include(a=>a.Contato).Include(a=>a.EnderecosEntrega).Include(a=>a.Departamentos).FirstOrDefault(a=>a.Id == id)!;
         }
         public void Add(Usuario usuario)
         {
