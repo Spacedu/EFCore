@@ -29,3 +29,19 @@ foreach(var colab in resultadoTurma)
     }
 }
 #endregion
+
+#region Many-To-Many + Payload for EF Core 5.0+
+Console.WriteLine("-------------------------");
+var colabVeiculo = db.Colaboradores!.Include(a => a.ColaboradoresVeiculos)!.ThenInclude(a=>a.Veiculo);
+foreach(var colab in colabVeiculo)
+{
+    Console.WriteLine(colab.Nome);
+    foreach (var vinculo in colab.ColaboradoresVeiculos!)
+    {
+        Console.WriteLine($"- {vinculo.Veiculo.Nome}({vinculo.Veiculo.Placa}):{vinculo.DataInicioDeVinculo}");
+    }
+}
+
+var vinculo01 = db.Set<ColaboradorVeiculo>().SingleOrDefault(a=>a.ColaboradorId == 1 && a.VeiculoId == 1);
+Console.WriteLine(vinculo01!.DataInicioDeVinculo);
+#endregion

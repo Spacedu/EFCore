@@ -16,6 +16,7 @@ namespace eCommerce.Office
     {
         public DbSet<Colaborador>? Colaboradores { get; set; }
         public DbSet<ColaboradorSetor>? ColaboradoresSetores { get; set; }
+        //public DbSet<ColaboradorVeiculo>? ColaboradoresVeiculos { get; set; }
         public DbSet<Setor>? Setores { get; set; }
         public DbSet<Turma>? Turmas { get; set; }
         public DbSet<Veiculo>? Veiculos { get; set; }
@@ -51,7 +52,7 @@ namespace eCommerce.Office
             modelBuilder.Entity<Colaborador>().HasMany(a => a.Turmas).WithMany(a => a.Colaboradores);
             #endregion
 
-            #region Mapping: Colaborador <=> Veiculo (EF Core 5+)
+            #region Mapping: Colaborador <=> Veiculo + Payload (EF Core 5+)
             modelBuilder.Entity<Colaborador>()
                 .HasMany(a => a.Veiculos)
                 .WithMany(a => a.Colaboradores)
