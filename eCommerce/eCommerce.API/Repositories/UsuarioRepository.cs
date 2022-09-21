@@ -24,6 +24,7 @@ namespace eCommerce.API.Repositories
         }
         public Usuario Get(int id)
         {
+            //EFCore = 1; Dapper = +20; ADO.NET = +40;
             return _db.Usuarios.Include(a=>a.Contato).Include(a=>a.EnderecosEntrega).Include(a=>a.Departamentos).FirstOrDefault(a=>a.Id == id)!;
         }
         public void Add(Usuario usuario)
