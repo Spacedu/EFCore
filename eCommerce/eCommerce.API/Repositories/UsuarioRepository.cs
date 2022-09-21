@@ -32,6 +32,28 @@ namespace eCommerce.API.Repositories
             /*
              * Unit of Works
              */
+            if(usuario.Departamentos != null)
+            {
+                var departamentos = usuario.Departamentos;
+
+                usuario.Departamentos = new List<Departamento>();
+
+                foreach(var departamento in departamentos)
+                {
+                    if(departamento.Id > 0)
+                    {
+                        //Ref. Registro do Banco de dados
+                        usuario.Departamentos.Add(_db.Departamentos.Find(departamento.Id)!);
+                    }
+                    else
+                    {
+                        //Ref. Objeto novo, que não existe no SGDB. (Novo registro de Departamento)
+                        usuario.Departamentos.Add(departamento);
+                    }
+                }
+            }
+
+
             _db.Usuarios.Add(usuario);
             _db.SaveChanges();
         }
