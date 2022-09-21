@@ -12,8 +12,8 @@ using eCommerce.API.Database;
 namespace eCommerce.API.Migrations
 {
     [DbContext(typeof(eCommerceContext))]
-    [Migration("20220915175801_Mudanca02")]
-    partial class Mudanca02
+    [Migration("20220921185811_BancoInicial")]
+    partial class BancoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,6 +79,43 @@ namespace eCommerce.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departamentos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Mercado"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Moda"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Móveis"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nome = "Informática"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Nome = "Eletrodomésticos"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Nome = "Eletroportáteis"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Nome = "Beleza"
+                        });
                 });
 
             modelBuilder.Entity("eCommerce.Models.EnderecoEntrega", b =>
@@ -148,14 +185,11 @@ namespace eCommerce.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Mae")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomeMae")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomePai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RG")

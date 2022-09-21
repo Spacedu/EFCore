@@ -33,7 +33,7 @@ namespace eCommerce.API.Migrations
                     Sexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RG = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NomeMae = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mae = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SituacaoCadastro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataCadastro = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
@@ -112,6 +112,20 @@ namespace eCommerce.API.Migrations
                         principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Departamentos",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "Mercado" },
+                    { 2, "Moda" },
+                    { 3, "Móveis" },
+                    { 4, "Informática" },
+                    { 5, "Eletrodomésticos" },
+                    { 6, "Eletroportáteis" },
+                    { 7, "Beleza" }
                 });
 
             migrationBuilder.CreateIndex(

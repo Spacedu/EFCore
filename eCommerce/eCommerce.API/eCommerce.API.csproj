@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eCommerce.Models.FluentAPI\eCommerce.Models.FluentAPI.csproj" />
+    <ProjectReference Include="..\eCommerce.Models\eCommerce.Models.csproj" />
   </ItemGroup>
 
 </Project>
