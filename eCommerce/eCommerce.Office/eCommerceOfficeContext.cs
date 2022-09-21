@@ -27,7 +27,7 @@ namespace eCommerce.Office
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Mapping: ColaboradorSetor
+            #region Mapping: ColaboradorSetor (EF Core 3.1)
             /*
              * Muitos para Muitos usando 2 relacionamentos de Um para Muitos
              * Many-To-Many: 2x One-To-Many
@@ -50,6 +50,19 @@ namespace eCommerce.Office
             #region Mapping: Colaborador <=> Turma (EF Core 5+)
             modelBuilder.Entity<Colaborador>().HasMany(a => a.Turmas).WithMany(a => a.Colaboradores);
             #endregion
+
+            #region Mapping: Colaborador <=> Veiculo (EF Core 5+)
+            modelBuilder.Entity<Colaborador>()
+                .HasMany(a => a.Veiculos)
+                .WithMany(a => a.Colaboradores)
+                .UsingEntity<ColaboradorVeiculo>(
+                    q => q.HasOne(a=>a.Veiculo).WithMany(a=>a.ColaboradoresVeiculos).HasForeignKey(a=>a.VeiculoId),
+                    q => q.HasOne(a=>a.Colaborador).WithMany(a=>a.ColaboradoresVeiculos).HasForeignKey(a=>a.ColaboradorId),
+                    q => q.HasKey(a=>new { a.ColaboradorId, a.VeiculoId })
+                );
+
+            #endregion
+
             #region Seeds
             modelBuilder.Entity<Colaborador>().HasData(
                 new Colaborador() { Id = 1, Nome = "José" },
@@ -83,6 +96,14 @@ namespace eCommerce.Office
                 new Turma() { Id = 3, Nome = "Turma A3" },
                 new Turma() { Id = 4, Nome = "Turma A4" },
                 new Turma() { Id = 5, Nome = "Turma A5" }
+            );
+
+            modelBuilder.Entity<Veiculo>().HasData(
+                new Veiculo() { Id = 1, Nome = "FIAT - Argo", Placa = "ABC-1234" },
+                new Veiculo() { Id = 2, Nome = "FIAT - Mobi", Placa = "DFG-1234" },
+                new Veiculo() { Id = 3, Nome = "FIAT - Sienna", Placa = "HIJ-1234" },
+                new Veiculo() { Id = 4, Nome = "FIAT - Idea", Placa = "LMN-1234" },
+                new Veiculo() { Id = 5, Nome = "FIAT - Toro", Placa = "OPQ-1234" }
             );
             #endregion
         }
