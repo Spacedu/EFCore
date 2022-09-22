@@ -34,6 +34,7 @@ namespace eCommerce.API.Repositories
              */
             CriarVinculoDoUsuarioComDepartamento(usuario);
 
+            _db.Usuarios.Add(usuario);
             _db.SaveChanges();
         }
 
