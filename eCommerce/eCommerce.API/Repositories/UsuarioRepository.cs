@@ -32,15 +32,42 @@ namespace eCommerce.API.Repositories
             /*
              * Unit of Works
              */
-            if(usuario.Departamentos != null)
+            CriarVinculoDoUsuarioComDepartamento(usuario);
+
+            _db.SaveChanges();
+        }
+
+
+        public void Update(Usuario usuario)
+        {
+            //EF Core - Tracking
+            ExcluirVinculoDoUsuarioComDepartamento(usuario);
+
+            CriarVinculoDoUsuarioComDepartamento(usuario);
+
+            _db.Usuarios.Update(usuario);
+            _db.SaveChanges();
+        }
+
+
+        public void Delete(int id)
+        {
+            _db.Usuarios.Remove(Get(id));
+            _db.SaveChanges();
+        }
+
+
+        private void CriarVinculoDoUsuarioComDepartamento(Usuario usuario)
+        {
+            if (usuario.Departamentos != null)
             {
                 var departamentos = usuario.Departamentos;
 
                 usuario.Departamentos = new List<Departamento>();
 
-                foreach(var departamento in departamentos)
+                foreach (var departamento in departamentos)
                 {
-                    if(departamento.Id > 0)
+                    if (departamento.Id > 0)
                     {
                         //Ref. Registro do Banco de dados
                         usuario.Departamentos.Add(_db.Departamentos.Find(departamento.Id)!);
@@ -52,20 +79,17 @@ namespace eCommerce.API.Repositories
                     }
                 }
             }
-
-
-            _db.Usuarios.Add(usuario);
-            _db.SaveChanges();
         }
-        public void Update(Usuario usuario)
+
+        private void ExcluirVinculoDoUsuarioComDepartamento(Usuario usuario)
         {
-            _db.Usuarios.Update(usuario);
+            var usuarioDoBanco = _db.Usuarios.Include(a => a.Departamentos).FirstOrDefault(a => a.Id == usuario.Id);
+            foreach (var departamento in usuarioDoBanco!.Departamentos!)
+            {
+                usuarioDoBanco.Departamentos.Remove(departamento);
+            }
             _db.SaveChanges();
-        }
-        public void Delete(int id)
-        {
-            _db.Usuarios.Remove(Get(id));
-            _db.SaveChanges();
+            _db.ChangeTracker.Clear();
         }
     }
 }
