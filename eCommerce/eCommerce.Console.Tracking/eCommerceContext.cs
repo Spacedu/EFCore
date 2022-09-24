@@ -8,7 +8,10 @@ namespace eCommerce.API.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;");
+                .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;")
+                .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                ;
 
 
         }
