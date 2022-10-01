@@ -51,3 +51,14 @@ foreach(var usuario in usuariosList)
 {
     Console.WriteLine($" - {usuario.Nome}");
 }
+
+/*
+ * OrderBy, OrderByDescending, ThenBy, ThenByDesceding
+ */
+
+Console.WriteLine("LISTA DE USUÁRIOS (ORDER)");
+var usuariosListOrder = db.Usuarios!.OrderBy(a=>a.Sexo).ThenBy(a=>a.Nome).ToList();
+foreach (var usuario in usuariosListOrder)
+{
+    Console.WriteLine($" - {usuario.Nome}");
+}
