@@ -1,4 +1,5 @@
 ﻿using eCommerce.API.Database;
+using Microsoft.EntityFrameworkCore;
 
 /*
  * EF Core > Support LINQ > SQL - EFCore > SGDB
@@ -40,3 +41,13 @@ Console.WriteLine($"VALOR MIN(ID):{min}");
 
 var max = db.Usuarios!.Max(a => a.Nome);
 Console.WriteLine($"VALOR MAX(ID):{max}");
+
+/*
+ * WHERE
+ */
+Console.WriteLine("LISTA DE USUÁRIOS (WHERE)");
+var usuariosList = db.Usuarios!.Where(a=>a.Nome.Contains("a") || a.Nome.Contains("j")).ToList(); //LIKE 
+foreach(var usuario in usuariosList)
+{
+    Console.WriteLine($" - {usuario.Nome}");
+}
