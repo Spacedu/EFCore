@@ -86,3 +86,11 @@ foreach(var contato in contatos)
 {
     Console.WriteLine($" - {contato.Telefone} -> {contato.Usuario!.Nome} - QT END: {contato.Usuario!.EnderecosEntrega!.Count} - QT DEP: {contato.Usuario!.Departamentos!.Count}");
 }
+
+db.ChangeTracker.Clear();
+Console.WriteLine("LISTA DE USUARIOS (AUTOINCLUDE)");
+var usuariosAutoInclude = db.Usuarios!.IgnoreAutoIncludes().ToList();
+foreach(var usuario in usuariosAutoInclude)
+{
+    Console.WriteLine($"NOME: {usuario.Nome} - TEL: {usuario.Contato?.Telefone}");
+}
