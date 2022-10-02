@@ -66,6 +66,7 @@ foreach (var usuario in usuariosListOrder)
 /*
  * Include, ThenInclude
  * Include (Nível 1)
+ * ThenInclude (Nível 2)
  */
 Console.WriteLine("LISTA DE USUÁRIOS (INCLUDE)");
 var usuariosListInclude = db.Usuarios!.Include(a=>a.Contato).Include(a=>a.EnderecosEntrega!.Where(e=>e.Estado == "SP")).Include(a=>a.Departamentos).ToList();
@@ -77,4 +78,11 @@ foreach (var usuario in usuariosListInclude)
     {
         Console.WriteLine($" -- {endereco.NomeEndereco}: {endereco.CEP} - {endereco.Estado} - {endereco.Bairro} - {endereco.Endereco}");
     }
+}
+
+Console.WriteLine("LISTA DE TELEFONE (THENINCLUDE)");
+var contatos = db.Contatos!.Include(a=>a.Usuario).ThenInclude(u=>u!.EnderecosEntrega).Include(a=>a.Usuario).ThenInclude(a=>a!.Departamentos).ToList();
+foreach(var contato in contatos)
+{
+    Console.WriteLine($" - {contato.Telefone} -> {contato.Usuario!.Nome} - QT END: {contato.Usuario!.EnderecosEntrega!.Count} - QT DEP: {contato.Usuario!.Departamentos!.Count}");
 }
