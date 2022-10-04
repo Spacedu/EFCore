@@ -27,8 +27,8 @@ namespace eCommerce.Models
         public string? Mae { get; set; }
         public string? SituacaoCadastro { get; set; }
         public DateTimeOffset DataCadastro { get; set; }
-        public Contato? Contato { get; set; }
-        public ICollection<EnderecoEntrega>? EnderecosEntrega { get; set; }
-        public ICollection<Departamento>? Departamentos { get; set; }
+        public virtual Contato? Contato { get; set; }
+        public virtual ICollection<EnderecoEntrega>? EnderecosEntrega { get; set; }
+        public virtual ICollection<Departamento>? Departamentos { get; set; }
     }
 }

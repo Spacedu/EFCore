@@ -114,3 +114,13 @@ foreach (var endereco in enderecos)
 {
     Console.WriteLine($" -- {endereco.NomeEndereco}: {endereco.Estado} {endereco.Bairro} {endereco.Endereco} {endereco!.Usuario!.Nome}");
 }
+
+/*
+ * LAZY LOADING - Carregamento Preguiçoso
+ * - Proxies
+ * - S/ Prexies
+ */
+Console.WriteLine("CARREGAMENTO PREGUIÇOSO");
+db.ChangeTracker.Clear();
+var usuarioLazyLoad = db.Usuarios!.Find(1);
+Console.WriteLine($"- NOME: {usuarioLazyLoad!.Nome} - END: {usuarioLazyLoad.EnderecosEntrega?.Count}");
