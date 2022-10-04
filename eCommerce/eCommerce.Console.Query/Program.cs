@@ -64,7 +64,8 @@ foreach (var usuario in usuariosListOrder)
 }
 
 /*
- * Include, ThenInclude
+ * Eager Load - Carregamento Adiantado
+ * Include, ThenInclude e AutoInclude
  * Include (Nível 1)
  * ThenInclude (Nível 2)
  */
@@ -93,4 +94,23 @@ var usuariosAutoInclude = db.Usuarios!.IgnoreAutoIncludes().ToList();
 foreach(var usuario in usuariosAutoInclude)
 {
     Console.WriteLine($"NOME: {usuario.Nome} - TEL: {usuario.Contato?.Telefone}");
+}
+
+/*
+ * EXPLICIT LOAD - Carregamento Explícito
+ */
+Console.WriteLine("CARREGAMENTO EXPLÍCITO");
+db.ChangeTracker.Clear();
+var usuarioExplictLoad = db.Usuarios!.IgnoreAutoIncludes().FirstOrDefault(a=>a.Id == 1);
+Console.WriteLine($" - NOME: {usuarioExplictLoad!.Nome} - TEL: {usuarioExplictLoad!.Contato?.Telefone} - END: {usuarioExplictLoad.EnderecosEntrega?.Count}");
+
+db.Entry(usuarioExplictLoad).Reference(a => a.Contato).Load();
+db.Entry(usuarioExplictLoad).Collection(a => a.EnderecosEntrega!).Load();
+Console.WriteLine($" - NOME: {usuarioExplictLoad!.Nome} - TEL: {usuarioExplictLoad!.Contato!.Telefone} - END: {usuarioExplictLoad.EnderecosEntrega?.Count}");
+
+var enderecos = db.Entry(usuarioExplictLoad).Collection(a => a.EnderecosEntrega!).Query().Where(a => a.Estado == "SP").ToList();
+
+foreach (var endereco in enderecos)
+{
+    Console.WriteLine($" -- {endereco.NomeEndereco}: {endereco.Estado} {endereco.Bairro} {endereco.Endereco} {endereco!.Usuario!.Nome}");
 }
