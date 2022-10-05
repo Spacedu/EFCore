@@ -118,7 +118,9 @@ foreach (var endereco in enderecos)
 /*
  * LAZY LOADING - Carregamento Preguiçoso
  * - Proxies
- * - S/ Prexies
+ * - S/ Proxies
+ * -- ILazyLoader (EF Core)
+ * -- Delegate (Modelo -> Acoplamento com ILazyLoader)
  */
 Console.WriteLine("CARREGAMENTO PREGUIÇOSO");
 db.ChangeTracker.Clear();

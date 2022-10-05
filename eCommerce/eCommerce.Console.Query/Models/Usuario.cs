@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,16 @@ namespace eCommerce.Models
      */
     public class Usuario
     {
+        private readonly ILazyLoader LazyLoader;
+
+        public Usuario()
+        {
+
+        }
+        public Usuario(ILazyLoader lazyLoader)
+        {
+            LazyLoader = lazyLoader;
+        }
         public int Id { get; set; }
         public string Nome { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -27,8 +38,13 @@ namespace eCommerce.Models
         public string? Mae { get; set; }
         public string? SituacaoCadastro { get; set; }
         public DateTimeOffset DataCadastro { get; set; }
-        public virtual Contato? Contato { get; set; }
-        public virtual ICollection<EnderecoEntrega>? EnderecosEntrega { get; set; }
-        public virtual ICollection<Departamento>? Departamentos { get; set; }
+        public Contato? Contato { get; set; }
+
+        private ICollection<EnderecoEntrega>? _enderecosEntrega;
+        public ICollection<EnderecoEntrega>? EnderecosEntrega {
+            get => LazyLoader.Load(this, ref _enderecosEntrega);
+            set => _enderecosEntrega = value;
+        }
+        public ICollection<Departamento>? Departamentos { get; set; }
     }
 }
