@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using eCommerce.Console.Query.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,13 @@ namespace eCommerce.Models
      */
     public class Usuario
     {
-        private readonly ILazyLoader LazyLoader;
+        private readonly Action<object, string> LazyLoader;
 
         public Usuario()
         {
 
         }
-        public Usuario(ILazyLoader lazyLoader)
+        public Usuario(Action<object, string> lazyLoader)
         {
             LazyLoader = lazyLoader;
         }
