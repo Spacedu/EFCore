@@ -126,3 +126,10 @@ Console.WriteLine("CARREGAMENTO PREGUIÇOSO");
 db.ChangeTracker.Clear();
 var usuarioLazyLoad = db.Usuarios!.Find(1);
 Console.WriteLine($"- NOME: {usuarioLazyLoad!.Nome} - END: {usuarioLazyLoad.EnderecosEntrega?.Count}");
+
+/*
+ * SPLITQUERY - Query Dividida
+ */
+Console.WriteLine("QUERY DIVIDIDA");
+var usuarioSplitQuery = db.Usuarios!.AsSingleQuery().Include(a => a.EnderecosEntrega).FirstOrDefault(a => a.Id == 1);
+Console.WriteLine($"- NOME: {usuarioSplitQuery!.Nome} - END: {usuarioSplitQuery.EnderecosEntrega?.Count}");
