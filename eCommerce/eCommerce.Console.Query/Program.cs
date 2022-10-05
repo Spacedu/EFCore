@@ -1,5 +1,6 @@
 ﻿using eCommerce.API.Database;
 using eCommerce.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 /*
@@ -158,3 +159,18 @@ foreach (var usuario in usuarioSelect)
     Console.WriteLine($"- COD: {usuario.Id} - Nome: {usuario.Nome} - Mãe: {usuario.Mae}");
 }
 
+/*
+ * EXECUTA SQL:
+ * - SELECT
+ * - VIEWS
+ * - STORED PROCEDURES
+ */
+db.ChangeTracker.Clear();
+Console.WriteLine("EXECUÇÃO DE SQL");
+
+var nome = new SqlParameter("@nome", "Filipe%");
+var usuariosSQLRaw = db.Usuarios!.FromSqlRaw($"SELECT * FROM [Usuarios] WHERE Nome LIKE @nome", nome).IgnoreAutoIncludes().ToList();
+foreach (var usuario in usuariosSQLRaw)
+{
+    Console.WriteLine($"- COD: {usuario.Id} - Nome: {usuario.Nome} - Mãe: {usuario.Mae}");
+}
