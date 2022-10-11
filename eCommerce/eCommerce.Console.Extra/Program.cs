@@ -7,7 +7,7 @@ var db = new eCommerceContext();
  * Ignorar o Global Filter em uma consulta
  * var usuarios = db.Usuarios!.IgnoreQueryFilters().ToList();
  */
-var usuarios = db.Usuarios!.IgnoreQueryFilters().ToList();
+var usuarios = db.Usuarios!.ToList();
 
 foreach (var usuario in usuarios)
 {

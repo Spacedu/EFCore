@@ -30,10 +30,16 @@ namespace eCommerce.Models
         public string? RG { get; set; }
         public string CPF { get; set; } = null!;
         public string? Mae { get; set; }
-        public string? SituacaoCadastro { get; set; } //A = Ativo, I = Inativo
+        public SituacaoCadastro SituacaoCadastro { get; set; } //A = Ativo, I = Inativo
         public DateTimeOffset DataCadastro { get; set; }
         public Contato? Contato { get; set; }
         public ICollection<EnderecoEntrega>? EnderecosEntrega { get; set; }
         public ICollection<Departamento>? Departamentos { get; set; }
+    }
+
+    public enum SituacaoCadastro
+    {
+        Ativo,
+        Inativo
     }
 }
