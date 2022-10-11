@@ -18,7 +18,7 @@ namespace eCommerce.API.Database
         {
             modelBuilder.Entity<Usuario>().ToTable("Usuarios", t => t.IsTemporal(
                 b => {
-                    b.HasPeriodStart("PeriodioInicial");
+                    b.HasPeriodStart("PeriodoInicial");
                     b.HasPeriodEnd("PeriodoFinal");
                     b.UseHistoryTable("UsuariosHistorico");
                 }
