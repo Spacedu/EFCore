@@ -11,7 +11,7 @@ namespace eCommerce.API.Database
             optionsBuilder
                 .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;"
                 //, options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                )
+                )   
                 .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
                 .EnableSensitiveDataLogging()
                 ;
