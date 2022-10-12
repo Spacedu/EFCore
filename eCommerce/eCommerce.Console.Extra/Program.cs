@@ -1,4 +1,5 @@
-﻿using eCommerce.API.Database;
+﻿using Dapper;
+using eCommerce.API.Database;
 using eCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,15 @@ var To = new DateTime(2022, 10, 11, 21, 23, 00);
 var usuarioTemp = db.Usuarios!.TemporalContainedIn(From, To).Where(a => a.Id == 2).OrderBy(a => EF.Property<DateTime>(a, "PeriodoInicial")).ToList();
 
 foreach (var usuario in usuarioTemp)
+{
+    Console.WriteLine($" - {usuario.Nome} Mãe: {usuario.Mae}");
+}
+
+Console.WriteLine("INTEGRADO AO DAPPER");
+var connection = db.Database.GetDbConnection();
+var usuariosDapper = connection.Query<Usuario>("SELECT * FROM [Usuarios]");
+
+foreach (var usuario in usuariosDapper)
 {
     Console.WriteLine($" - {usuario.Nome} Mãe: {usuario.Mae}");
 }
